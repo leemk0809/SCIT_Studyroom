@@ -1,9 +1,7 @@
-package net.scit.studyroom.dao;
+package net.scit.studyroom.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import net.scit.studyroom.domain.Test;
 
 @Repository
 public interface TestRepository extends JpaRepository<Test, Long> {
