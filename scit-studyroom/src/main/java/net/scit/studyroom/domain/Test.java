@@ -1,4 +1,4 @@
-package net.scit.studyroom.dto;
+package net.scit.studyroom.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

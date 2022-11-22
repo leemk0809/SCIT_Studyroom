@@ -1,0 +1,21 @@
+drop table study_member;
+create table study_member(
+	id VARCHAR(100) not null primary key
+    , passwd varchar(100) not null
+    , name varchar(60) not null
+);
+
+drop table study_group;
+create table study_group(
+	study_num int not null auto_increment primary key 
+    , name varchar(60) not null
+    , image varchar(42)
+);
+
+drop table study_attended;
+create table study_attended(
+	study_num int 
+    , id varchar(100)
+    , foreign key (study_num) references study_group(study_num)
+    , foreign key (id) references study_member(id)
+);

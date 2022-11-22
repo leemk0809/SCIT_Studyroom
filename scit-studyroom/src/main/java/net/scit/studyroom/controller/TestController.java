@@ -2,7 +2,8 @@ package net.scit.studyroom.controller;
 
 import lombok.RequiredArgsConstructor;
 import net.scit.studyroom.dao.TestRepository;
-import net.scit.studyroom.dto.Test;
+import net.scit.studyroom.domain.Test;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
