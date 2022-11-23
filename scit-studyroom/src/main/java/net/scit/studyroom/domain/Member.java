@@ -3,8 +3,7 @@ package net.scit.studyroom.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
-import org.hibernate.annotations.Table;
+import javax.persistence.Table;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -15,7 +14,7 @@ import net.scit.studyroom.dto.MemberDTO;
 
 @Entity
 @Data
-@Table(appliesTo = "study_member")
+@Table(name = "study_member")
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder(builderMethodName = "MemberBuilder")

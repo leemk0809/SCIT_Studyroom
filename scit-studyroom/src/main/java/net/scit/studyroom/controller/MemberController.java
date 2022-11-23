@@ -16,8 +16,8 @@ public class MemberController {
 
 	private final MemberService memberService;
 	
-	@PostMapping("/Member")
+	@PostMapping("/member")
 	public ResponseEntity<?> save(@RequestBody MemberDTO memberDTO){
-		return new ResponseEntity<>(memberService.addMember(memberDTO), HttpStatus.OK); // 200, 브라우저가 인식할 상태코드
+		return new ResponseEntity<>(memberService.addMember(memberDTO), HttpStatus.CREATED); // 201, 새로운 리소스 생성
 	}
 }

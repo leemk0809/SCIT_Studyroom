@@ -16,7 +16,7 @@ public class MemberService {
 		
 		Member member = Member.builder(memberDTO).build();
 		
-		//member = memberRepository.save(member);
+		member = memberRepository.save(member);
 		return member;
 	}
 }
