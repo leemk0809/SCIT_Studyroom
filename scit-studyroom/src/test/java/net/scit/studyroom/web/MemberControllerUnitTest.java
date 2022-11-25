@@ -1,6 +1,8 @@
 package net.scit.studyroom.web;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -17,6 +19,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
@@ -24,7 +27,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
 import net.scit.studyroom.domain.Member;
-import net.scit.studyroom.domain.MemberRepository;
 import net.scit.studyroom.dto.MemberDTO;
 import net.scit.studyroom.service.MemberService;
 
@@ -122,5 +124,27 @@ public class MemberControllerUnitTest {
 			.andExpect(status().isOk())
 			.andExpect(jsonPath("$.name").value("updateUnit"))
 			.andDo(MockMvcResultHandlers.print());
+	}
+	
+	@Test
+	public void daeleteById_test() throws Exception {
+		// given
+		String id = "Anonymous1";
+		
+		given(memberService.deleteMemberById(id)).willReturn("ok");
+		
+		// when
+		ResultActions resultAction = mockMvc.perform(delete("/member/{id}", id)
+				.accept(MediaType.TEXT_PLAIN));
+		
+		// then
+		resultAction
+			.andExpect(status().isOk())
+			.andDo(MockMvcResultHandlers.print());
+		
+		MvcResult requestResult = resultAction.andReturn();	
+		String result = requestResult.getResponse().getContentAsString();
+		
+		assertEquals("ok", result);
 	}
 }

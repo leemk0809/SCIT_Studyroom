@@ -1,8 +1,11 @@
 package net.scit.studyroom.web;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -16,6 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
@@ -96,5 +100,45 @@ public class MemberControllerIntegreTest {
 			.andExpect(jsonPath("$.id").value(id))
 			.andExpect(jsonPath("$.name").value("민국"))
 			.andDo(MockMvcResultHandlers.print());
+	}
+	
+	@Test
+	public void update_test() throws Exception {
+		// given
+		String id = "Anonymous1";
+		MemberDTO memberDTO = new MemberDTO(id, "updateIntegre", "updateIntegre");
+		String content = new ObjectMapper().writeValueAsString(memberDTO);
+		
+		// when
+		ResultActions resultAction = mockMvc.perform(put("/member/{id}", id)
+				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.content(content)
+				.accept(MediaType.APPLICATION_JSON_UTF8));
+		
+		// then
+		resultAction
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.name").value("updateUnit"))
+			.andDo(MockMvcResultHandlers.print());
+	}
+	
+	@Test
+	public void daeleteById_test() throws Exception {
+		// given
+		String id = "Anonymous1";
+				
+		// when
+		ResultActions resultAction = mockMvc.perform(delete("/member/{id}", id)
+				.accept(MediaType.TEXT_PLAIN));
+		
+		// then
+		resultAction
+			.andExpect(status().isOk())
+			.andDo(MockMvcResultHandlers.print());
+		
+		MvcResult requestResult = resultAction.andReturn();	
+		String result = requestResult.getResponse().getContentAsString();
+		
+		assertEquals("deleteMember ok", result);
 	}
 }
